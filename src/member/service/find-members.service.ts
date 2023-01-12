@@ -4,16 +4,19 @@ import {
   FindMembersInboundPortInputDto,
   FindMembersInboundPortOutputDto,
 } from '../inbound-port/find-members.inbound-port';
-import { FIND_MEMBERS_OUTBOUND_PORT } from '../outbound-port/find-members.outbound-port';
+import {
+  FindMembersOutboundPort,
+  FIND_MEMBERS_OUTBOUND_PORT,
+} from '../outbound-port/find-members.outbound-port';
 
 export class FindMembersService implements FindMembersInboundPort {
-    constructor(
-        @Inject(FIND_MEMBERS_OUTBOUND_PORT)
-        private readonly findMembers
-    )
+  constructor(
+    @Inject(FIND_MEMBERS_OUTBOUND_PORT)
+    private readonly findMembersOutboundPort: FindMembersOutboundPort,
+  ) {}
   async execute(
-    prams: FindMembersInboundPortInputDto,
+    params: FindMembersInboundPortInputDto,
   ): Promise<FindMembersInboundPortOutputDto> {
-    return MemoryDatabase.findMembers();
+    return this.findMembersOutboundPort.execute();
   }
 }
